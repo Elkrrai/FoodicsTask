@@ -1,6 +1,6 @@
-package com.example.foodicstask.food.presentation.products_list
+package com.example.foodicstask.tables.presentation.tables_screen
 
-import com.example.foodicstask.food.domain.entities.Product
+import com.example.foodicstask.tables.domain.entities.Product
 
 data class ProductsListState(
     val isLoading: Boolean = false,

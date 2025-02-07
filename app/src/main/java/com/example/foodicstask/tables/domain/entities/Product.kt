@@ -1,4 +1,4 @@
-package com.example.foodicstask.food.domain.entities
+package com.example.foodicstask.tables.domain.entities
 
 data class Product(
     val id: Int,
