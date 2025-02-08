@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -33,15 +32,16 @@ import com.example.foodicstask.tables.domain.entities.Product
 fun ProductCard(
     modifier: Modifier = Modifier,
     product: Product,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
 ) {
     Box(
         modifier = modifier
             .padding(
-                top = 6.dp,
-                start = 6.dp
+                top = 10.dp,
+                start = 6.dp,
+                end = 6.dp
             )
-            .height(130.dp)
+            .height(120.dp)
             .fillMaxSize()
     ) {
         Card(
@@ -58,7 +58,7 @@ fun ProductCard(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(1f),
+                        .weight(1.5f),
                 ) {
                     RemoteImage(product.image)
                 }
@@ -68,7 +68,7 @@ fun ProductCard(
                         .fillMaxWidth()
                         .background(Color.White)
                         .weight(1f)
-                        .padding(8.dp),
+                        .padding(2.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Column(
@@ -77,7 +77,7 @@ fun ProductCard(
                         Text(
                             text = "Bacon & Cheese",
                             style = TextStyle(
-                                fontSize = 12.sp,
+                                fontSize = 11.sp,
                                 fontFamily = FontFamily.SansSerif,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.Black
@@ -88,7 +88,7 @@ fun ProductCard(
                         Text(
                             text = "Burger",
                             style = TextStyle(
-                                fontSize = 12.sp,
+                                fontSize = 11.sp,
                                 fontFamily = FontFamily.SansSerif,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.Black
@@ -101,23 +101,26 @@ fun ProductCard(
             }
         }
 
-        Box(
-            modifier = Modifier
-                .background(Color.Red, CircleShape)
-                .width(26.dp)
-                .aspectRatio(1f)
-                .align(Alignment.TopEnd),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = 5.toString(),
-                color = Color.White,
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold
-                ),
-                modifier = Modifier.padding(4.dp)
-            )
+        if (product.ordered > 0) {
+            Box(
+                modifier = Modifier
+                    .offset(x = 5.dp, y = (-5).dp)
+                    .background(Color.Red, CircleShape)
+                    .width(20.dp)
+                    .aspectRatio(1f)
+                    .align(Alignment.TopEnd),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = product.ordered.toString(),
+                    color = Color.White,
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold
+                    ),
+                    modifier = Modifier.padding(4.dp)
+                )
+            }
         }
     }
 }
