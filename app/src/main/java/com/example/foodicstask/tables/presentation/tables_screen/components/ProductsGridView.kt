@@ -19,7 +19,7 @@ fun ProductsGridView(
     LazyVerticalGrid(
         modifier = modifier
             .background(PurpleGrey40)
-            .padding(horizontal = 8.dp),
+            .padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
         columns = GridCells.Fixed(3),
         content = {
             items(20) { index ->

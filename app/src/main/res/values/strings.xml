@@ -7,4 +7,5 @@
     <string name="error_serialization">Couldn\'t serialize or deserialize data.</string>
     <string name="search_hint">Search for products or categories.</string>
     <string name="menu_title">Menu</string>
+    <string name="view_order">View order</string>
 </resources>
