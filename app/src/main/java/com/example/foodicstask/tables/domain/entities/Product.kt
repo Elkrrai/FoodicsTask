@@ -7,4 +7,5 @@ data class Product(
     val description: String,
     val image: String,
     val price: Double,
+    val ordered :Int
 )

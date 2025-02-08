@@ -1,8 +1,9 @@
-package com.example.foodicstask.tables.presentation.tables_screen
+package com.example.foodicstask.tables.presentation.tables_screen.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.foodicstask.tables.presentation.tables_screen.TablesViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

@@ -1,4 +1,4 @@
-package com.example.foodicstask.tables.presentation.tables_screen
+package com.example.foodicstask.tables.presentation.tables_screen.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background

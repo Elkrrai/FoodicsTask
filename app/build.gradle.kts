@@ -54,6 +54,8 @@ dependencies {
 
     implementation(libs.bundles.ktor)
 
+    implementation(libs.bundles.coil)
+
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.junit)
