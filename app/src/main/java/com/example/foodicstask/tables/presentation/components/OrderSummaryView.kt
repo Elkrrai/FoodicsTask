@@ -1,4 +1,4 @@
-package com.example.foodicstask.tables.presentation.tables_screen.components
+package com.example.foodicstask.tables.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.foodicstask.R
+import com.example.foodicstask.core.presentation.util.formatOrders
 import com.example.foodicstask.ui.theme.Purple
 
 @Composable
@@ -48,7 +49,7 @@ fun OrderSummaryView(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = orderedProducts.toString(),
+                    text = orderedProducts.formatOrders(),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     color = Purple,

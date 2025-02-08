@@ -1,4 +1,4 @@
-package com.example.foodicstask.tables.presentation.tables_screen
+package com.example.foodicstask.tables.presentation
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

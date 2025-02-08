@@ -1,4 +1,4 @@
-package com.example.foodicstask.tables.presentation.tables_screen.components
+package com.example.foodicstask.tables.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.RestaurantMenu
+import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -94,7 +94,7 @@ fun TopBarView(
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Text(
-                    text = stringResource(R.string.menu_title),
+                    text = stringResource(R.string.menu),
                     style = TextStyle(
                         fontSize = 22.sp,
                         fontFamily = FontFamily.SansSerif,
@@ -110,7 +110,7 @@ fun TopBarView(
                 horizontalArrangement = Arrangement.End
             ) {
                 Icon(
-                    imageVector = Icons.Default.RestaurantMenu,
+                    imageVector = Icons.Default.Restaurant,
                     contentDescription = "Table Count"
                 )
                 Spacer(modifier = Modifier.width(4.dp))

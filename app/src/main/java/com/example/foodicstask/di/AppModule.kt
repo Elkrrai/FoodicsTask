@@ -5,7 +5,7 @@ import com.example.foodicstask.tables.data.source.remote.RemoteFoodDataSource
 import com.example.foodicstask.tables.domain.FoodDataSource
 import com.example.foodicstask.tables.domain.usecases.FetchCategoriesUseCase
 import com.example.foodicstask.tables.domain.usecases.FetchProductsUseCase
-import com.example.foodicstask.tables.presentation.tables_screen.TablesViewModel
+import com.example.foodicstask.tables.presentation.TablesViewModel
 import io.ktor.client.engine.cio.CIO
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.singleOf

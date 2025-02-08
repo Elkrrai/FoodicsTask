@@ -1,4 +1,4 @@
-package com.example.foodicstask.tables.presentation.tables_screen.components
+package com.example.foodicstask.tables.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

@@ -1,4 +1,4 @@
-package com.example.foodicstask.tables.presentation.tables_screen.components
+package com.example.foodicstask.tables.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxSize

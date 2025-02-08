@@ -1,4 +1,4 @@
-package com.example.foodicstask.tables.presentation.tables_screen.components
+package com.example.foodicstask.tables.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.foodicstask.tables.domain.entities.Category
 import com.example.foodicstask.tables.domain.entities.Product
-import com.example.foodicstask.ui.theme.PurpleGrey40
+import com.example.foodicstask.ui.theme.CoolGray
 
 @Composable
 fun ProductsGridView(
@@ -18,7 +18,7 @@ fun ProductsGridView(
 ) {
     LazyVerticalGrid(
         modifier = modifier
-            .background(PurpleGrey40)
+            .background(CoolGray)
             .padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
         columns = GridCells.Fixed(3),
         content = {

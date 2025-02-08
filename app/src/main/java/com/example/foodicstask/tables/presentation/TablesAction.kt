@@ -1,4 +1,4 @@
-package com.example.foodicstask.tables.presentation.tables_screen
+package com.example.foodicstask.tables.presentation
 
 import com.example.foodicstask.tables.domain.entities.Product
 
