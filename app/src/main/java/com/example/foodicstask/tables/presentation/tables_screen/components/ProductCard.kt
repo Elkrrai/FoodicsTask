@@ -41,7 +41,7 @@ fun ProductCard(
                 start = 6.dp,
                 end = 6.dp
             )
-            .height(120.dp)
+            .height(110.dp)
             .fillMaxSize()
     ) {
         Card(

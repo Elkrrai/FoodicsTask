@@ -40,7 +40,15 @@ fun TablesScreen(
             }
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(10.dp))
+
+        CategoriesTabLayout(
+            categories = getDummyCategories(),
+            selectedTabIndex = state.selectedCategoryIndex,
+            onTabSelected = {
+                onAction(TablesAction.OnCategorySelected(it))
+            }
+        )
 
         ProductsGridView(products = state.products)
     }
@@ -53,4 +61,8 @@ fun TablesScreenPreview() {
         state = TablesState(),
         onAction = {}
     )
+}
+
+fun getDummyCategories(): List<String> {
+    return listOf("Breakfast", "Lunch", "Dinner", "Sweets", "Ice", "Fruit", "Drink")
 }
