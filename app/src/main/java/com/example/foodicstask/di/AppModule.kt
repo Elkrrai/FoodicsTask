@@ -7,8 +7,8 @@ import com.example.foodicstask.tables.domain.usecases.FetchCategoriesUseCase
 import com.example.foodicstask.tables.domain.usecases.FetchProductsUseCase
 import com.example.foodicstask.tables.presentation.TablesViewModel
 import io.ktor.client.engine.cio.CIO
-import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
@@ -17,5 +17,5 @@ val appModule = module {
     singleOf(::RemoteFoodDataSource).bind<FoodDataSource>()
     factory { FetchCategoriesUseCase(get()) }
     factory { FetchProductsUseCase(get()) }
-    viewModelOf(::TablesViewModel)
+    viewModel { TablesViewModel(get(), get()) }
 }

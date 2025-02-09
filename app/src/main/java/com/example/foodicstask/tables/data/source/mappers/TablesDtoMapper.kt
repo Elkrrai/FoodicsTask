@@ -19,5 +19,4 @@ fun ProductDto.toProduct() =
         description = description,
         image = image,
         price = price,
-        ordered = 0
     )
