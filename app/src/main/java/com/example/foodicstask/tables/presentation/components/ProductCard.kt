@@ -37,11 +37,11 @@ fun ProductCard(
     Box(
         modifier = modifier
             .padding(
-                top = 10.dp,
+                top = 12.dp,
                 start = 6.dp,
                 end = 6.dp
             )
-            .height(110.dp)
+            .height(130.dp)
             .fillMaxSize()
     ) {
         Card(
@@ -49,7 +49,7 @@ fun ProductCard(
                 .fillMaxSize()
                 .clickable(onClick = onClick),
             elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
-            shape = RoundedCornerShape(10.dp)
+            shape = RoundedCornerShape(8.dp)
         ) {
             Column(
                 modifier = Modifier
@@ -68,8 +68,8 @@ fun ProductCard(
                         .fillMaxWidth()
                         .background(Color.White)
                         .weight(1f)
-                        .padding(2.dp),
-                    contentAlignment = Alignment.Center
+                        .padding(8.dp),
+                    contentAlignment = Alignment.CenterStart
                 ) {
                     Column(
                         horizontalAlignment = Alignment.Start
@@ -104,9 +104,9 @@ fun ProductCard(
         if (product.ordered > 0) {
             Box(
                 modifier = Modifier
-                    .offset(x = 5.dp, y = (-5).dp)
+                    .offset(x = 10.dp, y = (-10).dp)
                     .background(Color.Red, CircleShape)
-                    .width(20.dp)
+                    .width(25.dp)
                     .aspectRatio(1f)
                     .align(Alignment.TopEnd),
                 contentAlignment = Alignment.Center
