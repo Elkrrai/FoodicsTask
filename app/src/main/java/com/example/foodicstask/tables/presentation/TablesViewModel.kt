@@ -4,9 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foodicstask.core.domain.util.onError
 import com.example.foodicstask.core.domain.util.onSuccess
+import com.example.foodicstask.core.presentation.util.formatToTwoDecimalPlaces
 import com.example.foodicstask.tables.domain.usecases.FetchCategoriesUseCase
 import com.example.foodicstask.tables.domain.usecases.FetchProductsUseCase
 import com.example.foodicstask.tables.presentation.mappers.toUiModel
+import com.example.foodicstask.tables.presentation.models.ProductUi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -34,16 +36,11 @@ class TablesViewModel(
 
     fun onAction(action: TablesAction) {
         when (action) {
-            is TablesAction.OnProductClick -> {
-                _state.update {
-                    it.copy(
-                        orderedProducts = it.orderedProducts + 1,
-                        totalPrice = it.totalPrice + action.product.price
-                    )
-                }
-            }
+            is TablesAction.OnProductClick -> onProductClick(action.product)
 
             is TablesAction.OnCategorySelected -> selectCategory(action.index, action.categoryId)
+
+            is TablesAction.OnOrderSummaryClick -> onOrderSummaryClick()
 
             is TablesAction.OnSearchQuerySubmit -> {
                 _state.update {
@@ -102,6 +99,44 @@ class TablesViewModel(
                     _state.update { it.copy(isLoading = false) }
                     _events.send(TablesEvent.Error(error))
                 }
+        }
+    }
+
+    private fun onProductClick(product: ProductUi) {
+        _state.update { state ->
+            val productIndex = state.products.indexOfFirst { it.id == product.id }
+            if (productIndex == -1) {
+                return@update state
+            }
+
+            val updatedProducts = state.products
+                .mapIndexed { index, product ->
+                    if (index == productIndex) {
+                        product.copy(ordered = product.ordered + 1)
+                    } else {
+                        product
+                    }
+                }
+
+            val totalPrice = state.totalPrice + product.price
+            state.copy(
+                orderedProducts = state.orderedProducts + 1,
+                totalPrice = totalPrice.formatToTwoDecimalPlaces(),
+                products = updatedProducts
+            )
+        }
+    }
+
+    private fun onOrderSummaryClick() {
+        _state.update { state ->
+            val updatedProducts = state.products
+                .map { product -> product.copy(ordered = 0) }
+
+            state.copy(
+                orderedProducts = 0,
+                totalPrice = 0.0,
+                products = updatedProducts
+            )
         }
     }
 }

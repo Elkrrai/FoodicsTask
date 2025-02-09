@@ -32,7 +32,7 @@ import com.example.foodicstask.tables.presentation.models.ProductUi
 fun ProductCard(
     modifier: Modifier = Modifier,
     product: ProductUi,
-    onClick: () -> Unit = {},
+    onClick: (ProductUi) -> Unit
 ) {
     Box(
         modifier = modifier
@@ -47,7 +47,7 @@ fun ProductCard(
         Card(
             modifier = Modifier
                 .fillMaxSize()
-                .clickable(onClick = onClick),
+                .clickable(onClick = { onClick(product) }),
             elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
             shape = RoundedCornerShape(8.dp)
         ) {

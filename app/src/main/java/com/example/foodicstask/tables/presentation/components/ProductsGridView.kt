@@ -15,7 +15,8 @@ import com.example.foodicstask.ui.theme.CoolGray
 @Composable
 fun ProductsGridView(
     modifier: Modifier = Modifier,
-    products: List<ProductUi>
+    products: List<ProductUi>,
+    onClick: (ProductUi) -> Unit
 ) {
     if (products.isEmpty())
         return
@@ -34,7 +35,10 @@ fun ProductsGridView(
         columns = GridCells.Fixed(columns),
         content = {
             items(products.size) { index ->
-                ProductCard(product = products[index])
+                ProductCard(
+                    product = products[index],
+                    onClick = onClick
+                )
             }
         }
     )
