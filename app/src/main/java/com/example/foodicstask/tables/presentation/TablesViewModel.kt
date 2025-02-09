@@ -16,6 +16,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -156,7 +157,8 @@ class TablesViewModel(
     private fun observeSearchQuery() {
         state
             .map { it.searchQuery }
-            .debounce(1000L)
+            .distinctUntilChanged()
+            .debounce(500L)
             .onEach { query ->
                 when {
                     query.isBlank() -> {
@@ -187,6 +189,9 @@ class TablesViewModel(
                 product.name.contains(query, ignoreCase = true)
             }
         }
+
+        if (searchResult.isEmpty())
+            _events.send(TablesEvent.ShowError(NoSearchResult))
 
         _state.update { state ->
             state.copy(
