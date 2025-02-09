@@ -1,10 +1,14 @@
 package com.example.foodicstask.core.domain.util
 
-enum class NetworkError: Error {
-    REQUEST_TIMEOUT,
-    TOO_MANY_REQUESTS,
-    NO_INTERNET,
-    SERVER_ERROR,
-    SERIALIZATION,
-    UNKNOWN,
+sealed interface Error {
+    sealed interface NetworkError : Error {
+        data object RequestTimeout : NetworkError
+        data object TooManyRequests : NetworkError
+        data object NoInternet : NetworkError
+        data object ServerError : NetworkError
+        data object Serialization : NetworkError
+        data object Unknown : NetworkError
+    }
+
+    data object NoSearchResult : Error
 }

@@ -1,17 +1,18 @@
 package com.example.foodicstask.core.presentation.util
 
 import android.content.Context
-import com.example.foodicstask.core.domain.util.NetworkError
 import com.example.foodicstask.R
+import com.example.foodicstask.core.domain.util.Error
 
-fun NetworkError.toString(context: Context): String {
-    val resId = when(this) {
-        NetworkError.REQUEST_TIMEOUT -> R.string.error_request_timeout
-        NetworkError.TOO_MANY_REQUESTS -> R.string.error_too_many_requests
-        NetworkError.NO_INTERNET -> R.string.error_no_internet
-        NetworkError.SERVER_ERROR -> R.string.error_unknown
-        NetworkError.SERIALIZATION -> R.string.error_serialization
-        NetworkError.UNKNOWN -> R.string.error_unknown
+fun Error.getMessage(context: Context): String {
+    val resId = when (this) {
+        Error.NetworkError.NoInternet -> R.string.error_no_internet
+        Error.NetworkError.RequestTimeout -> R.string.error_request_timeout
+        Error.NetworkError.Serialization -> R.string.error_serialization
+        Error.NetworkError.ServerError -> R.string.error_unknown
+        Error.NetworkError.TooManyRequests -> R.string.error_too_many_requests
+        Error.NetworkError.Unknown -> R.string.error_unknown
+        Error.NoSearchResult -> R.string.no_search_result
     }
     return context.getString(resId)
 }

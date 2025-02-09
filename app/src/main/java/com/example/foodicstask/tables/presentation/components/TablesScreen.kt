@@ -57,6 +57,7 @@ fun TablesScreen(
 
         ProductsGridView(
             products = state.products,
+            searchResult = state.searchResult,
             modifier = Modifier
                 .weight(1f),
             onClick = {

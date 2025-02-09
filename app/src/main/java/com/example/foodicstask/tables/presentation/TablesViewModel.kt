@@ -2,6 +2,7 @@ package com.example.foodicstask.tables.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.foodicstask.core.domain.util.Error.NoSearchResult
 import com.example.foodicstask.core.domain.util.onError
 import com.example.foodicstask.core.domain.util.onSuccess
 import com.example.foodicstask.core.presentation.util.formatToTwoDecimalPlaces
@@ -9,22 +10,34 @@ import com.example.foodicstask.tables.domain.usecases.FetchCategoriesUseCase
 import com.example.foodicstask.tables.domain.usecases.FetchProductsUseCase
 import com.example.foodicstask.tables.presentation.mappers.toUiModel
 import com.example.foodicstask.tables.presentation.models.ProductUi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TablesViewModel(
     private val getCategories: FetchCategoriesUseCase,
     private val getProducts: FetchProductsUseCase
 ) : ViewModel() {
+    private var searchJob: Job? = null
+
     private val _state = MutableStateFlow(TablesState())
     val state = _state
-        .onStart { fetchCategories() }
+        .onStart {
+            fetchCategories()
+            observeSearchQuery()
+        }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(3000L),
@@ -73,7 +86,7 @@ class TablesViewModel(
                 }
                 .onError { error ->
                     _state.update { it.copy(isLoading = false) }
-                    _events.send(TablesEvent.Error(error))
+                    _events.send(TablesEvent.ShowError(error))
                 }
         }
     }
@@ -97,7 +110,7 @@ class TablesViewModel(
                     }
                 }.onError { error ->
                     _state.update { it.copy(isLoading = false) }
-                    _events.send(TablesEvent.Error(error))
+                    _events.send(TablesEvent.ShowError(error))
                 }
         }
     }
@@ -136,6 +149,49 @@ class TablesViewModel(
                 orderedProducts = 0,
                 totalPrice = 0.0,
                 products = updatedProducts
+            )
+        }
+    }
+
+    private fun observeSearchQuery() {
+        state
+            .map { it.searchQuery }
+            .debounce(1000L)
+            .onEach { query ->
+                when {
+                    query.isBlank() -> {
+                        _state.update {
+                            it.copy(
+                                searchResult = emptyList()
+                            )
+                        }
+                    }
+
+                    query.length >= 2 -> {
+                        searchJob?.cancel()
+                        searchJob = searchBooks(query)
+                    }
+                }
+            }
+            .launchIn(viewModelScope)
+    }
+
+    private fun searchBooks(query: String) = viewModelScope.launch {
+        _state.update { state ->
+            state.copy(
+                isLoading = true,
+            )
+        }
+        val searchResult = withContext(Dispatchers.Default) {
+            state.value.products.filter { product ->
+                product.name.contains(query, ignoreCase = true)
+            }
+        }
+
+        _state.update { state ->
+            state.copy(
+                searchResult = searchResult,
+                isLoading = false
             )
         }
     }

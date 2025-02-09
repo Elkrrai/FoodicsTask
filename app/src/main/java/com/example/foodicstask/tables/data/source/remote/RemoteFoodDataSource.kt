@@ -2,7 +2,7 @@ package com.example.foodicstask.tables.data.source.remote
 
 import com.example.foodicstask.core.data.networking.Routes
 import com.example.foodicstask.core.data.networking.safeCall
-import com.example.foodicstask.core.domain.util.NetworkError
+import com.example.foodicstask.core.domain.util.Error.NetworkError
 import com.example.foodicstask.core.domain.util.Result
 import com.example.foodicstask.core.domain.util.map
 import com.example.foodicstask.tables.data.source.mappers.toCategory
