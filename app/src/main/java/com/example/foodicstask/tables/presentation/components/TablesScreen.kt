@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +25,16 @@ fun TablesScreen(
     onAction: (TablesAction) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    if (state.isLoading) {
+        Box(
+            modifier = modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+    }
 
     Column(
         modifier = modifier
@@ -48,7 +59,7 @@ fun TablesScreen(
         Spacer(modifier = Modifier.height(10.dp))
 
         CategoriesTabLayout(
-            categories = getDummyCategories(),
+            categories = state.categories,
             selectedTabIndex = state.selectedCategoryIndex,
             onTabSelected = {
                 onAction(TablesAction.OnCategorySelected(it))
@@ -75,8 +86,4 @@ fun TablesScreenPreview() {
         state = TablesState(),
         onAction = {}
     )
-}
-
-fun getDummyCategories(): List<String> {
-    return listOf("Breakfast", "Lunch", "Dinner", "Sweets", "Ice", "Fruit", "Drink")
 }

@@ -26,12 +26,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.foodicstask.tables.domain.entities.Product
+import com.example.foodicstask.tables.presentation.models.ProductUi
 
 @Composable
 fun ProductCard(
     modifier: Modifier = Modifier,
-    product: Product,
+    product: ProductUi,
     onClick: () -> Unit = {},
 ) {
     Box(

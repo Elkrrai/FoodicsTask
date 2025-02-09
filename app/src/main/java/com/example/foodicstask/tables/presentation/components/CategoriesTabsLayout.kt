@@ -18,11 +18,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.foodicstask.tables.presentation.models.CategoryUi
 import com.example.foodicstask.ui.theme.DarkBlue
 
 @Composable
 fun CategoriesTabLayout(
-    categories: List<String>,
+    categories: List<CategoryUi>,
     selectedTabIndex: Int,
     onTabSelected: (Int) -> Unit
 ) {
@@ -34,7 +35,7 @@ fun CategoriesTabLayout(
         items(categories.size) { index ->
             val isSelected = selectedTabIndex == index
             CategoryTabItem(
-                title = categories[index],
+                title = categories[index].name,
                 isSelected = isSelected,
                 onClick = { onTabSelected(index) }
             )
