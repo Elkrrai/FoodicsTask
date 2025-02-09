@@ -1,9 +1,9 @@
-package com.example.foodicstask.food.domain
+package com.example.foodicstask.tables.domain
 
 import com.example.foodicstask.core.domain.util.NetworkError
 import com.example.foodicstask.core.domain.util.Result
-import com.example.foodicstask.food.domain.entities.Category
-import com.example.foodicstask.food.domain.entities.Product
+import com.example.foodicstask.tables.domain.entities.Category
+import com.example.foodicstask.tables.domain.entities.Product
 
 interface FoodDataSource {
     suspend fun fetchCategories(): Result<List<Category>, NetworkError>

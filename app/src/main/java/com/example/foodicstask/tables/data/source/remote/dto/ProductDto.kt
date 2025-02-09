@@ -1,4 +1,4 @@
-package com.example.foodicstask.food.data.source.remote.dto
+package com.example.foodicstask.tables.data.source.remote.dto
 
 import kotlinx.serialization.Serializable
 
