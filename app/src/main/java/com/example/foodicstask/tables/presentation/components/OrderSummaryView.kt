@@ -32,7 +32,7 @@ fun OrderSummaryView(
         modifier = modifier
             .fillMaxWidth()
             .height(60.dp)
-            .padding(horizontal = 4.dp)
+            .padding(horizontal = 4.dp, vertical = 4.dp)
             .background(Purple, shape = RoundedCornerShape(10)),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween

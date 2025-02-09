@@ -17,7 +17,7 @@ fun BottomNavGraph(
         startDestination = BottomNavDestination.Tables.route
     ) {
         composable(BottomNavDestination.Tables.route) {
-            TablesScreenRoot()
+            TablesScreenRoot(modifier = modifier)
         }
         composable(BottomNavDestination.Orders.route) {
             // OrdersScreen()
