@@ -15,9 +15,17 @@ import com.example.foodicstask.ui.theme.CoolGray
 @Composable
 fun ProductsGridView(
     modifier: Modifier = Modifier,
-    products: List<ProductUi>
+    products: List<ProductUi>,
+    searchResult: List<ProductUi> = emptyList(),
+    onClick: (ProductUi) -> Unit
 ) {
-    if (products.isEmpty())
+    val itemsToDisplay = if (searchResult.isNotEmpty()) {
+        searchResult
+    } else {
+        products
+    }
+
+    if (itemsToDisplay.isEmpty())
         return
 
     val windowInfo = rememberWindowInfo()
@@ -33,8 +41,11 @@ fun ProductsGridView(
             .padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
         columns = GridCells.Fixed(columns),
         content = {
-            items(products.size) { index ->
-                ProductCard(product = products[index])
+            items(itemsToDisplay.size) { index ->
+                ProductCard(
+                    product = itemsToDisplay[index],
+                    onClick = onClick
+                )
             }
         }
     )

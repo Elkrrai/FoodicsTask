@@ -1,7 +1,6 @@
 package com.example.foodicstask.tables.presentation
-
-import com.example.foodicstask.core.domain.util.NetworkError
+import com.example.foodicstask.core.domain.util.Error
 
 sealed interface TablesEvent {
-    data class Error(val error: NetworkError): TablesEvent
+    data class ShowError(val error: Error): TablesEvent
 }

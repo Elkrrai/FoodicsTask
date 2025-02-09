@@ -6,4 +6,5 @@ sealed interface TablesAction {
     data class OnSearchQuerySubmit(val query: String) : TablesAction
     data class OnCategorySelected(val index: Int, val categoryId: Int) : TablesAction
     data class OnProductClick(val product: ProductUi) : TablesAction
+    data object OnOrderSummaryClick : TablesAction
 }

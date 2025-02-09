@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.foodicstask.core.presentation.util.ObserveAsEvents
-import com.example.foodicstask.core.presentation.util.toString
+import com.example.foodicstask.core.presentation.util.getMessage
 import com.example.foodicstask.tables.presentation.TablesEvent
 import com.example.foodicstask.tables.presentation.TablesViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -19,10 +19,10 @@ fun TablesScreenRoot(
     val context = LocalContext.current
     ObserveAsEvents(events = viewModel.events) { event ->
         when(event) {
-            is TablesEvent.Error -> {
+            is TablesEvent.ShowError -> {
                 Toast.makeText(
                     context,
-                    event.error.toString(context),
+                    event.error.getMessage(context),
                     Toast.LENGTH_LONG
                 ).show()
             }

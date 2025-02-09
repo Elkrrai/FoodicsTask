@@ -25,16 +25,6 @@ fun TablesScreen(
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    if (state.isLoading) {
-        Box(
-            modifier = modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
-        }
-    }
-
     Column(
         modifier = modifier
             .fillMaxSize(),
@@ -67,16 +57,33 @@ fun TablesScreen(
 
         ProductsGridView(
             products = state.products,
+            searchResult = state.searchResult,
             modifier = Modifier
-                .weight(1f)
+                .weight(1f),
+            onClick = {
+                onAction(TablesAction.OnProductClick(it))
+            }
         )
 
         OrderSummaryView(
             modifier = Modifier
                 .background(Color.White),
             totalPrice = state.totalPrice,
-            orderedProducts = state.orderedProducts
+            orderedProducts = state.orderedProducts,
+            onClick = {
+                onAction(TablesAction.OnOrderSummaryClick)
+            }
         )
+    }
+
+    if (state.isLoading) {
+        Box(
+            modifier = modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
     }
 }
 

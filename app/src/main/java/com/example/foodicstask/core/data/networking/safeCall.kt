@@ -1,6 +1,6 @@
 package com.example.foodicstask.core.data.networking
 
-import com.example.foodicstask.core.domain.util.NetworkError
+import com.example.foodicstask.core.domain.util.Error.NetworkError
 import com.example.foodicstask.core.domain.util.Result
 import io.ktor.client.statement.HttpResponse
 import io.ktor.util.network.UnresolvedAddressException
@@ -14,12 +14,12 @@ suspend inline fun <reified T> safeCall(
     val response = try {
         execute()
     } catch(e: UnresolvedAddressException) {
-        return Result.Error(NetworkError.NO_INTERNET)
+        return Result.Error(NetworkError.NoInternet)
     } catch(e: SerializationException) {
-        return Result.Error(NetworkError.SERIALIZATION)
+        return Result.Error(NetworkError.Serialization)
     } catch(e: Exception) {
         coroutineContext.ensureActive()
-        return Result.Error(NetworkError.UNKNOWN)
+        return Result.Error(NetworkError.Unknown)
     }
 
     return responseToResult(response)

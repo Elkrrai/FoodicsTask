@@ -1,6 +1,7 @@
 package com.example.foodicstask.tables.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,7 +27,8 @@ fun OrderSummaryView(
     modifier: Modifier = Modifier,
     totalPrice: Double,
     priceUnit: String = "SAR",
-    orderedProducts: Int
+    orderedProducts: Int,
+    onClick: () -> Unit
 ) {
     if (orderedProducts == 0)
         return
@@ -36,7 +38,8 @@ fun OrderSummaryView(
             .fillMaxWidth()
             .height(60.dp)
             .padding(horizontal = 4.dp, vertical = 4.dp)
-            .background(Purple, shape = RoundedCornerShape(10)),
+            .background(Purple, shape = RoundedCornerShape(10))
+            .clickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

@@ -1,6 +1,6 @@
 package com.example.foodicstask.tables.domain.usecases
 
-import com.example.foodicstask.core.domain.util.NetworkError
+import com.example.foodicstask.core.domain.util.Error.NetworkError
 import com.example.foodicstask.core.domain.util.Result
 import com.example.foodicstask.core.domain.util.onError
 import com.example.foodicstask.tables.domain.FoodDataSource

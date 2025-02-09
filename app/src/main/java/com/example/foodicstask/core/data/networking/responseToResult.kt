@@ -1,6 +1,6 @@
 package com.example.foodicstask.core.data.networking
 
-import com.example.foodicstask.core.domain.util.NetworkError
+import com.example.foodicstask.core.domain.util.Error.NetworkError
 import com.example.foodicstask.core.domain.util.Result
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
@@ -14,12 +14,12 @@ suspend inline fun <reified T> responseToResult(
             try {
                 Result.Success(response.body<T>())
             } catch(e: NoTransformationFoundException) {
-                Result.Error(NetworkError.SERIALIZATION)
+                Result.Error(NetworkError.Serialization)
             }
         }
-        408 -> Result.Error(NetworkError.REQUEST_TIMEOUT)
-        429 -> Result.Error(NetworkError.TOO_MANY_REQUESTS)
-        in 500..599 -> Result.Error(NetworkError.SERVER_ERROR)
-        else -> Result.Error(NetworkError.UNKNOWN)
+        408 -> Result.Error(NetworkError.RequestTimeout)
+        429 -> Result.Error(NetworkError.TooManyRequests)
+        in 500..599 -> Result.Error(NetworkError.ServerError)
+        else -> Result.Error(NetworkError.Unknown)
     }
 }

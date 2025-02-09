@@ -8,4 +8,5 @@
     <string name="search_hint">Search for products or categories.</string>
     <string name="view_order">View order</string>
     <string name="menu">Menu</string>
+    <string name="no_search_result">No search result found.</string>
 </resources>
