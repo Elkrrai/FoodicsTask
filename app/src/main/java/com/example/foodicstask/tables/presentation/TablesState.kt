@@ -12,6 +12,6 @@ data class TablesState(
     val products: List<ProductUi> = emptyList(),
     val selectedCategoryIndex: Int = 0,
     val errorMessage: String? = null,
-    val productsQuantity: Int = 0,
+    val orderedProducts: Int = 0,
     val totalPrice: Double = 0.0
 )

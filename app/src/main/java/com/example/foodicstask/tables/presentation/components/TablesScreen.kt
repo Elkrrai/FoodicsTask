@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -61,8 +60,8 @@ fun TablesScreen(
         CategoriesTabLayout(
             categories = state.categories,
             selectedTabIndex = state.selectedCategoryIndex,
-            onTabSelected = {
-                onAction(TablesAction.OnCategorySelected(it))
+            onTabSelected = { index, id ->
+                onAction(TablesAction.OnCategorySelected(index, id))
             }
         )
 
@@ -74,7 +73,9 @@ fun TablesScreen(
 
         OrderSummaryView(
             modifier = Modifier
-                .background(Color.White)
+                .background(Color.White),
+            totalPrice = state.totalPrice,
+            orderedProducts = state.orderedProducts
         )
     }
 }

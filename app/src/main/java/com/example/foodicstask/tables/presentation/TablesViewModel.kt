@@ -10,7 +10,6 @@ import com.example.foodicstask.tables.presentation.mappers.toUiModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
@@ -35,24 +34,16 @@ class TablesViewModel(
 
     fun onAction(action: TablesAction) {
         when (action) {
-            is TablesAction.FetchProducts -> TODO()
-
             is TablesAction.OnProductClick -> {
                 _state.update {
                     it.copy(
-                        productsQuantity = it.productsQuantity + 1,
+                        orderedProducts = it.orderedProducts + 1,
                         totalPrice = it.totalPrice + action.product.price
                     )
                 }
             }
 
-            is TablesAction.OnCategorySelected -> {
-                _state.update {
-                    it.copy(
-                        selectedCategoryIndex = action.index
-                    )
-                }
-            }
+            is TablesAction.OnCategorySelected -> selectCategory(action.index, action.categoryId)
 
             is TablesAction.OnSearchQuerySubmit -> {
                 _state.update {
@@ -80,8 +71,34 @@ class TablesViewModel(
                             categories = categories.map { it.toUiModel() }
                         )
                     }
+
+                    selectCategory(0, categories.first().id)
                 }
                 .onError { error ->
+                    _state.update { it.copy(isLoading = false) }
+                    _events.send(TablesEvent.Error(error))
+                }
+        }
+    }
+
+    private fun selectCategory(index: Int, categoryId: Int) {
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    isLoading = true
+                )
+            }
+
+            getProducts.invoke(categoryId)
+                .onSuccess { products ->
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            selectedCategoryIndex = index,
+                            products = products.map { it.toUiModel() }
+                        )
+                    }
+                }.onError { error ->
                     _state.update { it.copy(isLoading = false) }
                     _events.send(TablesEvent.Error(error))
                 }

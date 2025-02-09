@@ -25,7 +25,7 @@ import com.example.foodicstask.ui.theme.DarkBlue
 fun CategoriesTabLayout(
     categories: List<CategoryUi>,
     selectedTabIndex: Int,
-    onTabSelected: (Int) -> Unit
+    onTabSelected: (Int,Int) -> Unit
 ) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
@@ -37,7 +37,7 @@ fun CategoriesTabLayout(
             CategoryTabItem(
                 title = categories[index].name,
                 isSelected = isSelected,
-                onClick = { onTabSelected(index) }
+                onClick = { onTabSelected(index, categories[index].id) }
             )
         }
     }

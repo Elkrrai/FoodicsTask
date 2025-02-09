@@ -24,10 +24,13 @@ import com.example.foodicstask.ui.theme.Purple
 @Composable
 fun OrderSummaryView(
     modifier: Modifier = Modifier,
-    totalPrice: Double = 1234.00,
+    totalPrice: Double,
     priceUnit: String = "SAR",
-    orderedProducts: Int = 3
+    orderedProducts: Int
 ) {
+    if (orderedProducts == 0)
+        return
+
     Row(
         modifier = modifier
             .fillMaxWidth()

@@ -75,7 +75,7 @@ fun ProductCard(
                         horizontalAlignment = Alignment.Start
                     ) {
                         Text(
-                            text = "Bacon & Cheese",
+                            text = product.name,
                             style = TextStyle(
                                 fontSize = 11.sp,
                                 fontFamily = FontFamily.SansSerif,
@@ -86,7 +86,7 @@ fun ProductCard(
                             overflow = TextOverflow.Ellipsis
                         )
                         Text(
-                            text = "Burger",
+                            text = product.category.name,
                             style = TextStyle(
                                 fontSize = 11.sp,
                                 fontFamily = FontFamily.SansSerif,
