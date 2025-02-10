@@ -2,15 +2,17 @@ package com.example.foodicstask.tables.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.foodicstask.core.domain.util.Error.NoSearchResult
+import com.example.foodicstask.core.domain.util.DataError.NoSearchResult
 import com.example.foodicstask.core.domain.util.onError
 import com.example.foodicstask.core.domain.util.onSuccess
 import com.example.foodicstask.core.presentation.util.formatToTwoDecimalPlaces
-import com.example.foodicstask.tables.domain.usecases.FetchCategoriesUseCase
-import com.example.foodicstask.tables.domain.usecases.FetchProductsUseCase
+import com.example.foodicstask.tables.domain.entities.Category
+import com.example.foodicstask.tables.domain.usecases.GetCategoriesUseCase
+import com.example.foodicstask.tables.domain.usecases.GetProductsUseCase
 import com.example.foodicstask.tables.presentation.mappers.toUiModel
 import com.example.foodicstask.tables.presentation.models.ProductUi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,8 +30,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class TablesViewModel(
-    private val getCategories: FetchCategoriesUseCase,
-    private val getProducts: FetchProductsUseCase
+    private val getCategories: GetCategoriesUseCase,
+    private val getProducts: GetProductsUseCase
 ) : ViewModel() {
     private var searchJob: Job? = null
 
@@ -52,7 +54,7 @@ class TablesViewModel(
         when (action) {
             is TablesAction.OnProductClick -> onProductClick(action.product)
 
-            is TablesAction.OnCategorySelected -> selectCategory(action.index, action.categoryId)
+            is TablesAction.OnCategorySelected -> selectCategory(action.index, action.category)
 
             is TablesAction.OnOrderSummaryClick -> onOrderSummaryClick()
 
@@ -83,7 +85,7 @@ class TablesViewModel(
                         )
                     }
 
-                    selectCategory(0, categories.first().id)
+                    selectCategory(0, categories.first())
                 }
                 .onError { error ->
                     _state.update { it.copy(isLoading = false) }
@@ -92,7 +94,7 @@ class TablesViewModel(
         }
     }
 
-    private fun selectCategory(index: Int, categoryId: Int) {
+    private fun selectCategory(index: Int, category: Category) {
         viewModelScope.launch {
             _state.update {
                 it.copy(
@@ -100,7 +102,7 @@ class TablesViewModel(
                 )
             }
 
-            getProducts.invoke(categoryId)
+            getProducts.invoke(category)
                 .onSuccess { products ->
                     _state.update {
                         it.copy(
@@ -154,6 +156,7 @@ class TablesViewModel(
         }
     }
 
+    @OptIn(FlowPreview::class)
     private fun observeSearchQuery() {
         state
             .map { it.searchQuery }

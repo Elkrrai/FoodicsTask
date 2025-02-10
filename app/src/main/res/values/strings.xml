@@ -9,4 +9,5 @@
     <string name="view_order">View order</string>
     <string name="menu">Menu</string>
     <string name="no_search_result">No search result found.</string>
+    <string name="local_data_error">Couldn\'t fetch data from local database.</string>
 </resources>

@@ -1,7 +1,7 @@
 package com.example.foodicstask.core.domain.util
 
-sealed interface Error {
-    sealed interface NetworkError : Error {
+sealed interface DataError {
+    sealed interface NetworkError : DataError {
         data object RequestTimeout : NetworkError
         data object TooManyRequests : NetworkError
         data object NoInternet : NetworkError
@@ -10,5 +10,7 @@ sealed interface Error {
         data object Unknown : NetworkError
     }
 
-    data object NoSearchResult : Error
+    data object NoSearchResult : DataError
+
+    data object LocalError : DataError
 }

@@ -50,8 +50,8 @@ fun TablesScreen(
         CategoriesTabLayout(
             categories = state.categories,
             selectedTabIndex = state.selectedCategoryIndex,
-            onTabSelected = { index, id ->
-                onAction(TablesAction.OnCategorySelected(index, id))
+            onTabSelected = { index, category ->
+                onAction(TablesAction.OnCategorySelected(index, category))
             }
         )
 

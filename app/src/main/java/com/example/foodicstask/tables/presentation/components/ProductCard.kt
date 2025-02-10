@@ -86,7 +86,7 @@ fun ProductCard(
                             overflow = TextOverflow.Ellipsis
                         )
                         Text(
-                            text = product.category.name,
+                            text = product.description,
                             style = TextStyle(
                                 fontSize = 11.sp,
                                 fontFamily = FontFamily.SansSerif,
