@@ -1,5 +1,6 @@
 package com.example.foodicstask.tables.data.source.local
 
+import android.util.Log
 import com.example.foodicstask.core.domain.util.DataError.LocalError
 import com.example.foodicstask.core.domain.util.Result
 import com.example.foodicstask.tables.data.source.local.database.TablesDatabase
@@ -36,11 +37,20 @@ class LocalTablesDataSource(
                 return Result.Error(LocalError)
             }
             val productIds = category.productIds
-            val result = database.productsDao().getProductsByIds(productIds)
+            val result = getProductsByIds(productIds)
             Result.Success(result)
         } catch (e: SQLException) {
             Result.Error(LocalError)
         }
+    }
+
+    private suspend fun getProductsByIds(productIds: List<Int>): List<ProductEntity> {
+        val products = mutableListOf<ProductEntity>()
+        for (productId in productIds) {
+            val product = database.productsDao().getProduct(productId)
+            products.add(product)
+        }
+        return products
     }
 
     suspend fun upsertProduct(product: ProductEntity) {
