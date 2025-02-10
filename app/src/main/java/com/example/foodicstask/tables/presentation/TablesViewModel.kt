@@ -2,15 +2,16 @@ package com.example.foodicstask.tables.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.foodicstask.core.domain.util.Error.NoSearchResult
+import com.example.foodicstask.core.domain.util.DataError.NoSearchResult
 import com.example.foodicstask.core.domain.util.onError
 import com.example.foodicstask.core.domain.util.onSuccess
 import com.example.foodicstask.core.presentation.util.formatToTwoDecimalPlaces
-import com.example.foodicstask.tables.domain.usecases.FetchCategoriesUseCase
-import com.example.foodicstask.tables.domain.usecases.FetchProductsUseCase
+import com.example.foodicstask.tables.domain.usecases.GetCategoriesUseCase
+import com.example.foodicstask.tables.domain.usecases.GetProductsUseCase
 import com.example.foodicstask.tables.presentation.mappers.toUiModel
 import com.example.foodicstask.tables.presentation.models.ProductUi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,8 +29,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class TablesViewModel(
-    private val getCategories: FetchCategoriesUseCase,
-    private val getProducts: FetchProductsUseCase
+    private val getCategories: GetCategoriesUseCase,
+    private val getProducts: GetProductsUseCase
 ) : ViewModel() {
     private var searchJob: Job? = null
 
@@ -154,6 +155,7 @@ class TablesViewModel(
         }
     }
 
+    @OptIn(FlowPreview::class)
     private fun observeSearchQuery() {
         state
             .map { it.searchQuery }

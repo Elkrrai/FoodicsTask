@@ -1,16 +1,16 @@
 package com.example.foodicstask.tables.domain.usecases
 
-import com.example.foodicstask.core.domain.util.Error.NetworkError
-import com.example.foodicstask.tables.domain.FoodDataSource
+import com.example.foodicstask.core.domain.util.DataError.NetworkError
 import com.example.foodicstask.tables.domain.entities.Category
 import com.example.foodicstask.core.domain.util.Result
 import com.example.foodicstask.core.domain.util.onError
+import com.example.foodicstask.tables.domain.TablesRepository
 
-class FetchCategoriesUseCase(
-    private val foodDataSource: FoodDataSource
+class GetCategoriesUseCase(
+    private val repository: TablesRepository
 ) {
     suspend operator fun invoke(): Result<List<Category>, NetworkError> {
-        return foodDataSource
+        return repository
             .fetchCategories()
             .onError {
                 // TODO: get categories from local db

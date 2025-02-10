@@ -1,6 +1,6 @@
 package com.example.foodicstask.core.data.networking
 
-import com.example.foodicstask.core.domain.util.Error.NetworkError
+import com.example.foodicstask.core.domain.util.DataError.NetworkError
 import com.example.foodicstask.core.domain.util.Result
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
