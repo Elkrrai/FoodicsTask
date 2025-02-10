@@ -13,7 +13,7 @@ fun DataError.getMessage(context: Context): String {
         DataError.NetworkError.TooManyRequests -> R.string.error_too_many_requests
         DataError.NetworkError.Unknown -> R.string.error_unknown
         DataError.NoSearchResult -> R.string.no_search_result
-        DataError.LocalError -> R.string.error_unknown
+        DataError.LocalError -> R.string.local_data_error
     }
     return context.getString(resId)
 }

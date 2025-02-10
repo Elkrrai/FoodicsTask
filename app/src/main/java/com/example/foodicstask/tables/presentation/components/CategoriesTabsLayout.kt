@@ -18,6 +18,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.foodicstask.tables.domain.entities.Category
+import com.example.foodicstask.tables.presentation.mappers.toCategory
 import com.example.foodicstask.tables.presentation.models.CategoryUi
 import com.example.foodicstask.ui.theme.DarkBlue
 
@@ -25,7 +27,7 @@ import com.example.foodicstask.ui.theme.DarkBlue
 fun CategoriesTabLayout(
     categories: List<CategoryUi>,
     selectedTabIndex: Int,
-    onTabSelected: (Int,Int) -> Unit
+    onTabSelected: (Int, Category) -> Unit
 ) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
@@ -37,7 +39,7 @@ fun CategoriesTabLayout(
             CategoryTabItem(
                 title = categories[index].name,
                 isSelected = isSelected,
-                onClick = { onTabSelected(index, categories[index].id) }
+                onClick = { onTabSelected(index, categories[index].toCategory()) }
             )
         }
     }

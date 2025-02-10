@@ -10,7 +10,8 @@ interface TablesRepository {
     suspend fun fetchCategories(): Result<List<Category>, NetworkError>
     suspend fun fetchProducts(categoryId: Int): Result<List<Product>, NetworkError>
     suspend fun getLocalCategories(): Result<List<Category>, LocalError>
-    suspend fun getLocalProducts(): Result<List<Product>, LocalError>
+    suspend fun getLocalProducts(categoryId:Int): Result<List<Product>, LocalError>
     suspend fun insertCategories(categories: List<Category>)
     suspend fun insertProducts(products: List<Product>)
+    suspend fun upsertProductsAndCategoryRelation(category: Category, productsIds: List<Int>)
 }

@@ -10,6 +10,6 @@ interface ProductsDao {
     @Upsert
     suspend fun upsert(product: ProductEntity)
 
-    @Query("SELECT * FROM ProductEntity")
-    suspend fun getAll(): List<ProductEntity>
+    @Query("SELECT * FROM ProductEntity WHERE id IN (:productIds)")
+    suspend fun getProductsByIds(productIds: List<Int>): List<ProductEntity>
 }

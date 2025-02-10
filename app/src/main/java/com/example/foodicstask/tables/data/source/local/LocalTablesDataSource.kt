@@ -29,9 +29,14 @@ class LocalTablesDataSource(
         }
     }
 
-    suspend fun fetchProducts(): Result<List<ProductEntity>, LocalError> {
+    suspend fun fetchProducts(categoryId: Int): Result<List<ProductEntity>, LocalError> {
         return try {
-            val result = database.productsDao().getAll()
+            val category = database.categoriesDao().getCategoryById(categoryId)
+            if (category.productIds.isEmpty()) {
+                return Result.Error(LocalError)
+            }
+            val productIds = category.productIds
+            val result = database.productsDao().getProductsByIds(productIds)
             Result.Success(result)
         } catch (e: SQLException) {
             Result.Error(LocalError)

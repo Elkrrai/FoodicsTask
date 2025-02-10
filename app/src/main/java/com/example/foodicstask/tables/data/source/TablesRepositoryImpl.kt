@@ -11,6 +11,7 @@ import com.example.foodicstask.tables.data.source.remote.RemoteTablesDataSource
 import com.example.foodicstask.tables.domain.TablesRepository
 import com.example.foodicstask.tables.domain.entities.Category
 import com.example.foodicstask.tables.domain.entities.Product
+import kotlin.collections.map
 
 class TablesRepositoryImpl(
     private val remoteDataSource: RemoteTablesDataSource,
@@ -31,10 +32,10 @@ class TablesRepositoryImpl(
             }
     }
 
-    override suspend fun getLocalProducts(): Result<List<Product>, DataError.LocalError> {
-        return localDataSource.fetchProducts()
-            .map { categories ->
-                categories.map { it.toProduct() }
+    override suspend fun getLocalProducts(categoryId: Int): Result<List<Product>, DataError.LocalError> {
+        return localDataSource.fetchProducts(categoryId)
+            .map { products ->
+                products.map { it.toProduct() }
             }
     }
 
@@ -44,5 +45,18 @@ class TablesRepositoryImpl(
 
     override suspend fun insertProducts(products: List<Product>) {
         localDataSource.insertProducts(products.map { it.toEntity() })
+    }
+
+    override suspend fun upsertProductsAndCategoryRelation(
+        category: Category,
+        productsIds: List<Int>
+    ) {
+        localDataSource.upsertCategory(
+            category = category
+                .toEntity()
+                .copy(
+                    productIds = productsIds
+                )
+        )
     }
 }

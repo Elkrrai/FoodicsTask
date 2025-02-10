@@ -7,7 +7,8 @@ import com.example.foodicstask.tables.domain.entities.Product
 
 fun Category.toEntity() = CategoryEntity(
     id = id,
-    name = name
+    name = name,
+    productIds = emptyList()
 )
 
 fun CategoryEntity.toCategory() = Category(

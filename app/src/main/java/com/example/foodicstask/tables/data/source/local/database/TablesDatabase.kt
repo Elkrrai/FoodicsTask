@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.foodicstask.tables.data.source.local.entities.CategoryEntity
 import com.example.foodicstask.tables.data.source.local.entities.ProductEntity
 
@@ -11,6 +12,7 @@ import com.example.foodicstask.tables.data.source.local.entities.ProductEntity
     entities = [CategoryEntity::class, ProductEntity::class],
     version = 1
 )
+@TypeConverters(Converters::class)
 abstract class TablesDatabase :
     RoomDatabase(),
     CategoriesDatabase,

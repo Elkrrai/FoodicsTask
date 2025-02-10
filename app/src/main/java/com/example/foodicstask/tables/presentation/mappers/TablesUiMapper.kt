@@ -21,3 +21,9 @@ fun Product.toUiModel() =
         category = category.toUiModel(),
         ordered = 0
     )
+
+fun CategoryUi.toCategory() =
+    Category(
+        id = id,
+        name = name
+    )
