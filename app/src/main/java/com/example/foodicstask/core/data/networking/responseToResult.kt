@@ -6,6 +6,14 @@ import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 
+/**
+ * Converts an [HttpResponse] to a [Result].
+ *
+ * This function handles common HTTP status codes and maps them to appropriate [Result] states.
+ *
+ * @param response The [HttpResponse] to convert.
+ * @return A [Result] containing the parsed response body on success, or a [NetworkError] on failure.
+ */
 suspend inline fun <reified T> responseToResult(
     response: HttpResponse
 ): Result<T, NetworkError> {

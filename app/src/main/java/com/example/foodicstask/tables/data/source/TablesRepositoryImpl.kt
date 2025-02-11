@@ -47,7 +47,7 @@ class TablesRepositoryImpl(
         localDataSource.insertProducts(products.map { it.toEntity() })
     }
 
-    override suspend fun upsertProductsAndCategoryRelation(
+    override suspend fun updateProductsAndCategoryRelation(
         category: Category,
         productsIds: List<Int>
     ) {

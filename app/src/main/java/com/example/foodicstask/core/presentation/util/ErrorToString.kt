@@ -4,6 +4,14 @@ import android.content.Context
 import com.example.foodicstask.R
 import com.example.foodicstask.core.domain.util.DataError
 
+/**
+ * Extension function for [DataError] to get a user-friendly error message.
+ *
+ * This function maps a [DataError] to a corresponding string.
+ *
+ * @param context The [Context] used to retrieve the localized string resource.
+ * @return A user-friendly error message string.
+ */
 fun DataError.getMessage(context: Context): String {
     val resId = when (this) {
         DataError.NetworkError.NoInternet -> R.string.error_no_internet
