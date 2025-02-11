@@ -32,10 +32,10 @@ class TablesRepositoryImpl(
             }
     }
 
-    override suspend fun getLocalProducts(categoryId: Int): Result<List<Product>, DataError.LocalError> {
-        return localDataSource.fetchProducts(categoryId)
+    override suspend fun getLocalProducts(category: Category): Result<List<Product>, DataError.LocalError> {
+        return localDataSource.fetchProducts(category.id)
             .map { products ->
-                products.map { it.toProduct() }
+                products.map { it.toProduct(category) }
             }
     }
 

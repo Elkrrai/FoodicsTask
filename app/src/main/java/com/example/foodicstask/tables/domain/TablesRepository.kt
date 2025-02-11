@@ -37,10 +37,10 @@ interface TablesRepository {
     /**
      * Retrieves a list of products from the local data source for a given category ID.
      *
-     * @param categoryId The ID of the category for which to retrieve products.
+     * @param category The category for which to retrieve products.
      * @return A [Result] containing a list of [Product] on success, or a [LocalError] on failure.
      */
-    suspend fun getLocalProducts(categoryId: Int): Result<List<Product>, LocalError>
+    suspend fun getLocalProducts(category: Category): Result<List<Product>, LocalError>
 
     /**
      * Inserts a list of categories into the local data source.
