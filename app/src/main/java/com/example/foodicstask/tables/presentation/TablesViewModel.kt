@@ -161,7 +161,7 @@ class TablesViewModel(
         state
             .map { it.searchQuery }
             .distinctUntilChanged()
-            .debounce(500L)
+            .debounce(1000L)
             .onEach { query ->
                 when {
                     query.isBlank() -> {

@@ -52,7 +52,7 @@ class GetProductsUseCase(
             repository.insertProducts(products)
             val productsIds = products.map { it.id }
             if (productsIds.isNotEmpty()) {
-                repository.upsertProductsAndCategoryRelation(category, productsIds)
+                repository.updateProductsAndCategoryRelation(category, productsIds)
             }
             remoteProducts
         }
