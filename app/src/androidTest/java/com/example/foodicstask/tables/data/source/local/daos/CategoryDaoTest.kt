@@ -40,7 +40,7 @@ class CategoryDaoTest {
         // Arrange: Create a sample category
         val category = CategoryEntity(
             id = 1,
-            name = "Books",
+            name = "Breakfast",
             productIds = listOf(101, 102, 103)
         )
 
@@ -60,9 +60,9 @@ class CategoryDaoTest {
     fun insertAllCategoriesAndRetrieveThem() = runBlocking {
         // Arrange: Create a list of categories
         val categories = listOf(
-            CategoryEntity(id = 1, name = "Books", productIds = listOf(101, 102)),
-            CategoryEntity(id = 2, name = "Electronics", productIds = listOf(201, 202)),
-            CategoryEntity(id = 3, name = "Clothing", productIds = listOf(301, 302))
+            CategoryEntity(id = 1, name = "Category 1", productIds = listOf(101, 102)),
+            CategoryEntity(id = 2, name = "Category 2", productIds = listOf(201, 202)),
+            CategoryEntity(id = 3, name = "Category 3", productIds = listOf(301, 302))
         )
 
         // Act: Insert all categories into the database

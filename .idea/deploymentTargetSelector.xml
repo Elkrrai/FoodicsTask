@@ -19,6 +19,12 @@
       <SelectionState runConfigName="insertAllCategoriesAndRetrieveThem()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      <SelectionState runConfigName="givenProductInserted_whenRetrievedById_thenReturnsCorrectProduct()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="givenMultipleProductsInserted_whenGetAll_thenReturnsCorrectList()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>
