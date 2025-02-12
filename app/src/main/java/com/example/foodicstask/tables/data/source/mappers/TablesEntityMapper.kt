@@ -25,12 +25,11 @@ fun Product.toEntity() = ProductEntity(
     description = description
 )
 
-// TODO: handle category name
-fun ProductEntity.toProduct() = Product(
+fun ProductEntity.toProduct(category: Category) = Product(
     id = id,
     name = name,
     price = price,
-    category = Category(id = categoryId, name = ""),
+    category = category,
     image = image,
     description = description
 )

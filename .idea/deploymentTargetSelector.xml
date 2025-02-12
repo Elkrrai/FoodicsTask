@@ -13,10 +13,16 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="TablesScreenPreview">
+      <SelectionState runConfigName="CategoryDaoTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="ProductCardPreview">
+      <SelectionState runConfigName="insertAllCategoriesAndRetrieveThem()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="givenProductInserted_whenRetrievedById_thenReturnsCorrectProduct()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="givenMultipleProductsInserted_whenGetAll_thenReturnsCorrectList()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

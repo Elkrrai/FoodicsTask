@@ -37,7 +37,7 @@ class GetProductsUseCase(
     suspend operator fun invoke(category: Category): Result<List<Product>, DataError> {
         val remoteProducts = repository.fetchProducts(category.id)
         return if (remoteProducts is Result.Error) {
-            val localProducts = repository.getLocalProducts(category.id)
+            val localProducts = repository.getLocalProducts(category)
             if (localProducts is Result.Success && localProducts.data.isNotEmpty()) {
                 Result.Success(localProducts.data)
             } else {
