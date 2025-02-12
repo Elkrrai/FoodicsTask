@@ -1,6 +1,5 @@
-package com.example.foodicstask.domain.usecases
+package com.example.foodicstask.tables.domain.usecases
 
-import com.example.foodicstask.tables.domain.usecases.GetProductsUseCase
 import com.example.foodicstask.core.domain.util.DataError
 import com.example.foodicstask.core.domain.util.Result
 import com.example.foodicstask.tables.domain.TablesRepository

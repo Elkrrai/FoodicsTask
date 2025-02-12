@@ -16,6 +16,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -29,6 +30,16 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * [TablesViewModel] is responsible for managing the UI state and handling user interactions
+ * related to the tables screen.
+ *
+ * It interacts with the domain layer through [GetCategoriesUseCase] and [GetProductsUseCase]
+ * to fetch and manage data.
+ *
+ * @property getCategories Use case for retrieving a list of categories.
+ * @property getProducts Use case for retrieving a list of products for a specific category.
+ */
 class TablesViewModel(
     private val getCategories: GetCategoriesUseCase,
     private val getProducts: GetProductsUseCase
@@ -36,6 +47,22 @@ class TablesViewModel(
     private var searchJob: Job? = null
 
     private val _state = MutableStateFlow(TablesState())
+    /**
+     * The current state of the tables screen.
+     *
+     * It's a [StateFlow] that emits updates whenever the state changes.
+     * The initial state is [TablesState].
+     *
+     * The state is updated in the following cases:
+     * - When the categories are fetched.
+     * - When a category is selected.
+     * - When a product is clicked.
+     * - When the order summary is clicked.
+     * - When the search query is submitted.
+     * - When the search result is updated.
+     * - When an error occurs.
+     * - When the loading state changes.
+     */
     val state = _state
         .onStart {
             fetchCategories()
@@ -47,9 +74,29 @@ class TablesViewModel(
             TablesState()
         )
 
+    /**
+     * A stream of events that the UI should react to.
+     *
+     * It's a [Channel] that emits events like [TablesEvent.ShowError].
+     *
+     * The events are emitted in the following cases:
+     * - When an error occurs while fetching categories or products.
+     * - When no search result is found.
+     */
     private val _events = Channel<TablesEvent>()
     val events = _events.receiveAsFlow()
 
+    /**
+     * Handles user actions on the tables screen.
+     *
+     * @param action The [TablesAction] performed by the user.
+     *
+     * The following actions are supported:
+     * - [TablesAction.OnProductClick]: When a product is clicked.
+     * - [TablesAction.OnCategorySelected]: When a category is selected.
+     * - [TablesAction.OnOrderSummaryClick]: When the order summary is clicked.
+     * - [TablesAction.OnSearchQuerySubmit]: When the search query is submitted.
+     */
     fun onAction(action: TablesAction) {
         when (action) {
             is TablesAction.OnProductClick -> onProductClick(action.product)
@@ -68,6 +115,14 @@ class TablesViewModel(
         }
     }
 
+    /**
+     * Fetches the list of categories from the [getCategories] use case and updates the state.
+     *
+     * It also selects the first category and fetches its products.
+     *
+     * In case of success, it updates the state with the list of categories and sets the loading state to false.
+     * In case of error, it updates the state with the loading state to false and emits a [TablesEvent.ShowError] event.
+     */
     private fun fetchCategories() {
         viewModelScope.launch {
             _state.update {
@@ -94,6 +149,15 @@ class TablesViewModel(
         }
     }
 
+    /**
+     * Selects a category and fetches its products from the [getProducts] use case.
+     *
+     * @param index The index of the selected category.
+     * @param category The selected category.
+     *
+     * In case of success, it updates the state with the list of products, the selected category index, and sets the loading state to false.
+     * In case of error, it updates the state with the loading state to false and emits a [TablesEvent.ShowError] event.
+     */
     private fun selectCategory(index: Int, category: Category) {
         viewModelScope.launch {
             _state.update {
@@ -118,6 +182,13 @@ class TablesViewModel(
         }
     }
 
+    /**
+     * Handles the click on a product.
+     *
+     * @param product The clicked product.
+     *
+     * It updates the state with the updated product list, the total price, and the number of ordered products.
+     */
     private fun onProductClick(product: ProductUi) {
         _state.update { state ->
             val productIndex = state.products.indexOfFirst { it.id == product.id }
@@ -143,6 +214,11 @@ class TablesViewModel(
         }
     }
 
+    /**
+     * Handles the click on the order summary.
+     *
+     * It updates the state with the updated product list, resets the total price, and the number of ordered products.
+     */
     private fun onOrderSummaryClick() {
         _state.update { state ->
             val updatedProducts = state.products
@@ -156,6 +232,19 @@ class TablesViewModel(
         }
     }
 
+    /**
+     * Observes changes in the [state]'s `searchQuery` property and initiates a search when the query changes.
+     *
+     * This function uses a debounce of 1000ms to avoid performing a search on every keystroke.
+     * It also ensures that only distinct queries are processed.
+     *
+     * - If the query is blank, it clears the `searchResult` in the state.
+     * - If the query has at least 2 characters, it cancels any previous search job and starts a new one by calling [searchBooks].
+     *
+     * This function is called automatically when the [state] flow starts collecting.
+     *
+     * @see searchBooks
+     */
     @OptIn(FlowPreview::class)
     private fun observeSearchQuery() {
         state
@@ -181,6 +270,18 @@ class TablesViewModel(
             .launchIn(viewModelScope)
     }
 
+    /**
+     * Searches for products whose names contain the given [query].
+     *
+     * This function filters the current list of products in the [state] and updates the `searchResult` in the state with the matching products.
+     *
+     * - It sets the `isLoading` state to `true` while the search is in progress.
+     * - It performs the search on the [Dispatchers.Default] dispatcher to avoid blocking the main thread.
+     * - If no products match the query, it emits a [TablesEvent.ShowError] event with [NoSearchResult].
+     * - It sets the `isLoading` state to `false` after the search is complete.
+     *
+     * @param query The search query.
+     */
     private fun searchBooks(query: String) = viewModelScope.launch {
         _state.update { state ->
             state.copy(
